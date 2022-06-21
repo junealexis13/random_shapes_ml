@@ -38,15 +38,15 @@ def shapes(d = 'dataset'):
 
 
 def clean(directory = os.getcwd()):
-    for x in directory:
-        if os.path.isfile(os.path.join(directory,x)) and x == '.DS_Store':
-            os.remove(os.path.join(directory,x))
-            print(f'removed {os.path.join(directory,x)}')
-        else:
-            if os.path.isdir(os.path.join(directory,x)):
-                for y in os.listdir(os.path.join(directory,x)):
-                    if os.path.isfile(os.path.join(directory, x, y)) and y == '.DS_Store':
-                        os.remove(os.path.join(directory,x,y))
-                        print(f'removed {os.path.join(directory,x,y)}')
-                    else:
-                        pass
+    for files in os.listdir(directory):
+        if os.path.isfile(files) and files == '.DS_Store':
+            os.remove(files)
+        elif os.path.isdir(files):
+            try:
+                clean(directory = os.path.join(directory,files))
+            except:
+                print('Error Encountered')
+
+
+if __name__ == "__main__":
+    clean()
